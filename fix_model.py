@@ -1,6 +1,8 @@
 import torch
+import os
 
-ckpt_path='/content/model.ckpt'
+os.rename('/content/model.ckpt','/content/model-original.ckpt')
+ckpt_path='/content/model-original.ckpt'
 sd = torch.load(ckpt_path, map_location="cuda")
 
 if "state_dict" not in sd:
@@ -17,4 +19,5 @@ for k in sd.keys():
         else:
             pruned_sd[k] = sd[k]
               
-torch.save(pruned_sd, "model2.ckpt")
+torch.save(pruned_sd, "model.ckpt")
+
